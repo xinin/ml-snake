@@ -30,13 +30,13 @@ class Game:
     def display_snake(self, index, position, color):
         last_part = self.snake[index].move(position)
         for part in self.snake[index].snake_list:
-            pygame.draw.rect(self.screen, color, [part[0], part[1], Snake.SNAKE_BLOCK, Snake.SNAKE_BLOCK])
+            pygame.draw.rect(self.screen, color, [part[0]*constants.SNAKE_BLOCK, part[1]*constants.SNAKE_BLOCK, constants.SNAKE_BLOCK, constants.SNAKE_BLOCK])
         if last_part:
-            pygame.draw.rect(self.screen, constants.BLUE, [last_part[0], last_part[1], Snake.SNAKE_BLOCK, Snake.SNAKE_BLOCK])
+            pygame.draw.rect(self.screen, constants.BLUE, [last_part[0]*constants.SNAKE_BLOCK, last_part[1]*constants.SNAKE_BLOCK, constants.SNAKE_BLOCK, constants.SNAKE_BLOCK])
  
     def display_message(self,msg, color):
         mesg = self.font_style.render(msg, True, color)
-        self.screen.blit(mesg, [constants.MAX_WIDTH / 6, constants.MAX_HEIGHT / 3])
+        self.screen.blit(mesg, [constants.MAX_WIDTH*constants.SNAKE_BLOCK / 6, constants.MAX_HEIGHT*constants.SNAKE_BLOCK / 3])
 
     def start_game(self):
         #self.score.reset()
@@ -48,8 +48,8 @@ class Game:
             self.mov_x.append(0)
             self.mov_y.append(0)
             self.game_over.append(False)
-            self.snake.append(Snake([constants.MAX_WIDTH / 2,constants.MAX_HEIGHT / 2], p))
-            self.food.append(Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,Snake.SNAKE_BLOCK ))
+            self.snake.append(Snake([constants.MAX_WIDTH / 2,constants.MAX_HEIGHT / 2],p))
+            self.food.append(Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,constants.SNAKE_BLOCK ))
 
         #self.snake = Snake([constants.MAX_WIDTH / 2,constants.MAX_HEIGHT / 2])
         #self.food = Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,Snake.SNAKE_BLOCK )
@@ -76,17 +76,17 @@ class Game:
                         s.path.append(random.randint(1, 4))
 
                     if s.path[iteration] == 1: #LEFT
-                        self.mov_x[i] = -Snake.SNAKE_BLOCK
+                        self.mov_x[i] = -1
                         self.mov_y[i] = 0
                     if s.path[iteration] == 2: #RIGHT
-                        self.mov_x[i] = Snake.SNAKE_BLOCK
+                        self.mov_x[i] = 1
                         self.mov_y[i] = 0
                     if s.path[iteration] == 3: #UP
                         self.mov_x[i] = 0
-                        self.mov_y[i] = -Snake.SNAKE_BLOCK
+                        self.mov_y[i] = -1
                     if s.path[iteration] == 4: #DOWN
                         self.mov_x[i] = 0
-                        self.mov_y[i] = Snake.SNAKE_BLOCK
+                        self.mov_y[i] = 1
 
                     x1 = self.snake[i].head()[0]
                     y1 = self.snake[i].head()[1]
@@ -94,17 +94,17 @@ class Game:
                     x1 += self.mov_x[i]
                     y1 += self.mov_y[i]
 
-                    pygame.draw.rect(self.screen, self.color[i], [self.food[i][0], self.food[i][1], Snake.SNAKE_BLOCK, Snake.SNAKE_BLOCK])
+                    pygame.draw.rect(self.screen, self.color[i], [self.food[i][0] * constants.SNAKE_BLOCK, self.food[i][1] * constants.SNAKE_BLOCK, constants.SNAKE_BLOCK, constants.SNAKE_BLOCK])
 
                     self.display_snake(i, [x1,y1], self.color[i])
 
                     if x1 >= constants.MAX_WIDTH or x1 < 0 or y1 >= constants.MAX_HEIGHT or y1 < 0 or self.snake[i].auto_hit():
                         self.game_over[i] = True
                         print("Snake KO: "+str(i))
-                        pygame.draw.rect(self.screen, constants.BLUE, [self.food[i][0], self.food[i][1], Snake.SNAKE_BLOCK, Snake.SNAKE_BLOCK])
+                        pygame.draw.rect(self.screen, constants.BLUE, [self.food[i][0], self.food[i][1], constants.SNAKE_BLOCK, constants.SNAKE_BLOCK])
             
                     if x1 == self.food[i][0] and y1 == self.food[i][1]:
-                        self.food[i] = Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,Snake.SNAKE_BLOCK )
+                        self.food[i] = Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,constants.SNAKE_BLOCK )
                         self.score[i].add_score(1000)
                         self.snake[i].grow()
                         print("YUUUM "+str(i))
@@ -116,8 +116,12 @@ class Game:
                     pygame.display.update()
                 i+=1
 
-            self.clock.tick(Snake.SNAKE_SPEED)
+            self.clock.tick(constants.SNAKE_SPEED)
             iteration+=1
 
         pygame.quit()
         quit()
+
+## registrar estado del juego en cada loop (mirar como almacenar todo en una matriz) posiblemente un csv
+## hacer sistema de score mejorado
+## añadir que si se acerca a la manzana da mas puntos

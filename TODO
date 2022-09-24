@@ -1,0 +1,9 @@
+Hacer cuadricula
+
+hacer score
+ sumar si la siguiente posicion está mas cerca de la manzana
+ sumar si come
+ x posicion de partes de snake y manzana, la Y el siguiente mov
+
+en carpeta scores hacer carpeta con timestamp y hacer fiheros temp_numero_snake para ir guardando en csv todo, ordenar por score cuando muera la snake
+

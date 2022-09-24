@@ -4,11 +4,9 @@ import constants
 
 import multiprocessing
 
-
-
 pygame.init()
 
-screen = pygame.display.set_mode((constants.MAX_WIDTH, constants.MAX_HEIGHT))
+screen = pygame.display.set_mode((constants.MAX_WIDTH * constants.SNAKE_BLOCK, constants.MAX_HEIGHT * constants.SNAKE_BLOCK))
 pygame.display.set_caption('Snake Game')
 
 font_style = pygame.font.SysFont("bahnschrift", 25)
