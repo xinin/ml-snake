@@ -1,5 +1,7 @@
 import pygame
 import random
+import os
+from datetime import datetime
 
 from food import Food
 from score import Score
@@ -40,17 +42,22 @@ class Game:
 
     def start_game(self):
         #self.score.reset()
-        
+
+        time = datetime.now()
+        SCORE_FOLDER = 'scores/'+time.strftime("%Y%m%d_%H%M%S")
+        os.mkdir(SCORE_FOLDER)
+        i=0
         for p in self.snake_paths:
             color = (random.randint(0, 255),random.randint(0, 255),random.randint(0, 255))
             self.color.append(color)
-            self.score.append(Score())
+            self.score.append(Score(SCORE_FOLDER, i))
             self.mov_x.append(0)
             self.mov_y.append(0)
             self.game_over.append(False)
             self.snake.append(Snake([constants.MAX_WIDTH / 2,constants.MAX_HEIGHT / 2],p))
             self.food.append(Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,constants.SNAKE_BLOCK ))
 
+            i+=1
         #self.snake = Snake([constants.MAX_WIDTH / 2,constants.MAX_HEIGHT / 2])
         #self.food = Food.generate(constants.MAX_WIDTH,constants.MAX_HEIGHT,Snake.SNAKE_BLOCK )
         
