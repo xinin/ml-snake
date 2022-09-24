@@ -3,3 +3,5 @@ env/
 __pycache__/**
 **scores/
 __pycache__/game.cpython-39.pyc
+**__pycache__/
+**env/
