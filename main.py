@@ -23,8 +23,10 @@ snakes_paths = [
     [4,4,4,4,4,4,4,4,4,4]
 ]
 
+food_coords = [[29,20],[20,20]]
+
 #time = datetime.now()
 #os.mkdir('scores/'+time.strftime("%Y%m%d_%H%M%S"))
 
-g = game.Game(screen, font_style, score_font,snakes_paths)
+g = game.Game(screen, font_style, score_font,snakes_paths, food_coords)
 g.start_game()

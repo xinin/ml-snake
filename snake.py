@@ -11,7 +11,6 @@ class Snake:
         if len(self.snake_list) > self.length:
             return self.snake_list.pop(0)
 
-
     def grow(self):
         self.length+=1
 
